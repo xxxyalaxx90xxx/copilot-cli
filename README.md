@@ -28,6 +28,8 @@ We're still early in our journey, but with your feedback, we're rapidly iteratin
 - **macOS**
 - **Windows**
 
+> Note: Termux/Android environments are not currently supported by the install script or release binaries.
+
 ### Prerequisites
 
 - (On Windows) **PowerShell** v6 or higher
