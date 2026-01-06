@@ -20,11 +20,8 @@ if [ "$TERMUX_DETECTED" = false ] && [ "${PREFIX:-}" = "/data/data/com.termux/fi
   # Termux sets PREFIX to this path by default
   TERMUX_DETECTED=true
 fi
-if [ "$TERMUX_DETECTED" = false ] && uname -o >/dev/null 2>&1; then
-  OS_NAME="$(uname -o || echo "")"
-  if [ "${OS_NAME:-}" = "Android" ]; then
-    TERMUX_DETECTED=true
-  fi
+if [ "$TERMUX_DETECTED" = false ] && [ "$(uname -o 2>/dev/null || echo "")" = "Android" ]; then
+  TERMUX_DETECTED=true
 fi
 if [ "$TERMUX_DETECTED" = true ]; then
   echo "Error: Termux/Android environment detected. The install script only supports Linux, macOS, and Windows."
