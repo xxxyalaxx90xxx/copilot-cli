@@ -12,7 +12,12 @@ set -e
 echo "Installing GitHub Copilot CLI..."
 
 # Termux/Android is not supported (binaries are built for glibc-based Linux)
-if [ "$(uname -o 2>/dev/null || echo "")" = "Android" ] || command -v termux-info >/dev/null 2>&1; then
+UNAME_O="$(uname -o 2>/dev/null || echo "")"
+HAS_TERMUX_INFO=false
+if command -v termux-info >/dev/null 2>&1; then
+  HAS_TERMUX_INFO=true
+fi
+if [ "$UNAME_O" = "Android" ] || [ "$HAS_TERMUX_INFO" = true ]; then
   echo "Error: Termux/Android environment detected. The install script only supports Linux, macOS, and Windows."
   echo "Please use GitHub Copilot CLI from a supported platform."
   exit 1
