@@ -13,17 +13,10 @@ echo "Installing GitHub Copilot CLI..."
 
 # Termux/Android is not supported (binaries are built for glibc-based Linux)
 TERMUX_PREFIX="/data/data/com.termux/files/usr"
-TERMUX_DETECTED=false
-if command -v termux-info >/dev/null 2>&1; then
-  TERMUX_DETECTED=true
-elif [ "${PREFIX:-}" = "$TERMUX_PREFIX" ]; then
-  # Termux sets PREFIX to this path by default
-  TERMUX_DETECTED=true
-elif [ "$(uname -o 2>/dev/null || echo "")" = "Android" ]; then
-  TERMUX_DETECTED=true
-fi
-if [ "$TERMUX_DETECTED" = true ]; then
-  echo "Error: Termux/Android environment detected. The install script only supports Linux, macOS, and Windows."
+if command -v termux-info >/dev/null 2>&1 || \
+   [ "${PREFIX:-}" = "$TERMUX_PREFIX" ] || \
+   [ "$(uname -o 2>/dev/null || echo "")" = "Android" ]; then
+  echo "Error: Termux/Android environment detected. The install script supports macOS, glibc-based Linux, and Windows."
   echo "Please use GitHub Copilot CLI from a supported platform."
   exit 1
 fi
