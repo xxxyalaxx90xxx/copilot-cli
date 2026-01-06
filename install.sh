@@ -23,7 +23,7 @@ else
   if uname -o >/dev/null 2>&1; then
     OS_NAME="$(uname -o 2>/dev/null || echo "")"
   fi
-  if [ "$OS_NAME" = "Android" ]; then
+  if [ "${OS_NAME:-}" = "Android" ]; then
     TERMUX_DETECTED=true
   fi
 fi
