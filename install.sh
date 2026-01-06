@@ -16,9 +16,16 @@ TERMUX_DETECTED=false
 if command -v termux-info >/dev/null 2>&1; then
   TERMUX_DETECTED=true
 elif [ "${PREFIX:-}" = "/data/data/com.termux/files/usr" ]; then
+  # Termux sets PREFIX to this path by default
   TERMUX_DETECTED=true
-elif uname -o >/dev/null 2>&1 && [ "$(uname -o 2>/dev/null)" = "Android" ]; then
-  TERMUX_DETECTED=true
+else
+  OS_NAME=""
+  if uname -o >/dev/null 2>&1; then
+    OS_NAME="$(uname -o 2>/dev/null || echo "")"
+  fi
+  if [ "$OS_NAME" = "Android" ]; then
+    TERMUX_DETECTED=true
+  fi
 fi
 if [ "$TERMUX_DETECTED" = true ]; then
   echo "Error: Termux/Android environment detected. The install script only supports Linux, macOS, and Windows."
