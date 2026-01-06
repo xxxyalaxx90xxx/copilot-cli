@@ -11,6 +11,17 @@ set -e
 
 echo "Installing GitHub Copilot CLI..."
 
+# Termux/Android is not supported (binaries are built for glibc-based Linux)
+# Default installation prefix used by Termux on Android
+TERMUX_PREFIX="/data/data/com.termux/files/usr"
+if command -v termux-info >/dev/null 2>&1 || \
+   [ "${PREFIX:-}" = "$TERMUX_PREFIX" ] || \
+   [ "$(uname -o 2>/dev/null || echo "")" = "Android" ]; then
+  echo "Error: Termux/Android environment detected. The install script supports macOS, standard Linux distributions, and Windows."
+  echo "Please use GitHub Copilot CLI from a supported platform."
+  exit 1
+fi
+
 # Detect platform
 case "$(uname -s || echo "")" in
   Darwin*) PLATFORM="darwin" ;;
