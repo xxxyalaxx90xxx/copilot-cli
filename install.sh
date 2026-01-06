@@ -15,14 +15,13 @@ echo "Installing GitHub Copilot CLI..."
 TERMUX_DETECTED=false
 if command -v termux-info >/dev/null 2>&1; then
   TERMUX_DETECTED=true
-elif [ "${PREFIX:-}" = "/data/data/com.termux/files/usr" ]; then
+fi
+if [ "$TERMUX_DETECTED" = false ] && [ "${PREFIX:-}" = "/data/data/com.termux/files/usr" ]; then
   # Termux sets PREFIX to this path by default
   TERMUX_DETECTED=true
-else
-  OS_NAME=""
-  if uname -o >/dev/null 2>&1; then
-    OS_NAME="$(uname -o 2>/dev/null || echo "")"
-  fi
+fi
+if [ "$TERMUX_DETECTED" = false ] && uname -o >/dev/null 2>&1; then
+  OS_NAME="$(uname -o || echo "")"
   if [ "${OS_NAME:-}" = "Android" ]; then
     TERMUX_DETECTED=true
   fi
